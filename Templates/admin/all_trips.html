@@ -1,0 +1,92 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+
+
+
+<!-- Quick Count Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4 justify-content-evenly">
+                    <div class="col-sm-4">
+                        <div class="bg-light rounded d-flex flex-wrap justify-content-center p-4 mw-100">
+                            <div class="fs-3 fw-bold mx-2 py-2 d-flex flex-wrap justify-content-between w-100">
+
+                                <p class="text-primary">
+<!--                                    <img src="{{url_for('static', filename='admin/img/soil_border.png') }}" style="width:50px; height:40px;">-->
+                                    Total Trips
+                                </p>
+                                <p class="text-dark">{{row_count}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="bg-light rounded d-flex flex-wrap justify-content-center p-4 mw-100">
+                            <div class="fs-3 fw-bold mx-2 py-2 d-flex flex-wrap justify-content-between w-100">
+
+                                <p class="text-primary">
+<!--                                    <img src="{{url_for('static', filename='admin/img/soil_border.png') }}" style="width:50px; height:40px;">-->
+                                    Visited Distrcts
+                                </p>
+                                <p class="text-dark">{{d_count}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="bg-light rounded d-flex flex-wrap justify-content-center p-4 mw-100">
+                            <div class="fs-3 fw-bold mx-2 py-2 d-flex flex-wrap justify-content-between w-100">
+
+                                <p class="text-primary ">
+<!--                                    <img src="{{url_for('static', filename='admin/img/soil_border.png') }}" style="width:50px; height:40px;">-->
+                                    Visited Forts
+                                </p>
+                                <p class="text-dark">{{f_count}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+<div class="container-fluid px-5 py-5">
+<!--    <div class="container py-2">-->
+<!--    <h1>Search Results</h1>-->
+    {% if planned_trips %}
+    <h5 class="text-center">All Planned Trips</h5>
+    <div class="table-responsive sticky-header " style="height:400px">
+        <table class="table table-hover table-bordered caption-top">
+            <thead>
+                <tr class="text-dark">
+                <th class="text-center" scope="col">Trip ID</th>
+                <th class="text-center" scope="col">District</th>
+                <th class="text-center" scope="col">Fort Names</th>
+                <th class="text-center" scope="col">Required Time</th>
+                <th class="text-center" scope="col">Travel Cost</th>
+                <th class="text-center" scope="col">Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for trip in planned_trips %}
+                <tr>
+                    <td class="text-center" scope="row">{{trip.trip_id}}</td>
+                    <td class="text-center" scope="row">{{trip.trip_district}}</td>
+                    <td class="text-center" scope="row">{{trip.forts_visited}}</td>
+                    <td class="text-center" scope="row">{{trip.required_time}}</td>
+                    <td class="text-center" scope="row">{{trip.minimum_cost}}</td>
+                    <td class="text-center" scope="row">{{trip.date}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{
+  "params" : {
+    "local_server" : "True",
+    "local_uri" : "mysql://root:root@localhost:3306/maharashtra_forts",
+    "prod_uri" : "production url",
+
+    "site_title" : "Tour Maharashtra",
+    "site_name" : "Maharashtra Forts",
+    "site_tagline" : "Everything about Maharshtra Forts",
+    "designer" : "Amey"
+  }
+}

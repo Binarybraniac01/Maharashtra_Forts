@@ -1,0 +1,143 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+<!--                <div class="container px-5 py-2">-->
+                <div class="alert alert-warning alert-dismissible fade show m-2" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<!--                </div>-->
+            {% endfor %}
+
+
+        {% endif %}
+    {% endwith %}
+
+    <div class="container-fluid px-5 py-2">
+    <div class="container d-flex justify-content-center py-2">
+        <form id="search_form">
+            <input type="search" name="query" placeholder="Search for forts">
+            <button class="btn btn-primary" type="submit" form="search_form" formmethod="post" formaction="/search">Search</button>
+        </form>
+    </div>
+    </div>
+
+
+    <div class="container-fluid px-5">
+    <div class="container py-2">
+<!--    <h1>Search Results</h1>-->
+    {% if forts %}
+        <div class="table-responsive sticky-header " style="height:400px">
+        <table class="table table-hover table-bordered caption-top" id="table1">
+<!--            <caption>List of forts</caption>-->
+            <thead>
+                <tr>
+                <th scope="col">Fort ID</th>
+                <th scope="col">Fort Name</th>
+                <th scope="col">Fort District</th>
+                <th scope="col">Latitude</th>
+                <th scope="col">Longitude</th>
+                <th scope="col">Fort Details</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for fort in forts %}
+                <tr>
+                    <td scope="row">{{fort.fort_id}}</td>
+                    <td scope="row">{{fort.fort_name}}</td>
+                    <td scope="row">{{fort.fort_district}}</td>
+                    <td scope="row">{{fort.fort_latitude}}</td>
+                    <td scope="row">{{fort.fort_longitude}}</td>
+                    <td scope="row">{{fort.detail}}</td>
+<!--                    <td scope="row">{{fort.detail[:50]}}</td>-->
+<!--                    <td class="detail-cell">-->
+<!--                        <span class="truncated-text">{{ fort.detail | truncate(100) }}</span>-->
+<!--                    </td>-->
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    {% else%}
+        <p class="d-flex justify-content-center">No forts found matching your search.</p>
+        <p class="d-flex justify-content-center">OR</p>
+        <p class="d-flex justify-content-center">You have not serached yet!.</p>
+
+    {% endif %}
+    </div>
+    </div>
+
+
+
+
+
+
+    <div class="container-fluid p-5">
+        <div class="container p-2">
+            <form id="info_form">
+            <div class="mb-5 row">
+                <label for="fort_id" class="col-sm-2 col-form-label"><strong>Fort ID </strong></label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="fort_id" name="fort_id" value="">
+                </div>
+            </div>
+            <div class="mb-5">
+                <label for="fort_name" class="form-label"><strong>Fort Name</strong></label>
+                <input type="text" class="form-control" id="fort_name" name="fort_name" placeholder="Enter fort name">
+            </div>
+            <div class="mb-5">
+                <label for="fort_district" class="form-label"><strong>Fort District</strong></label>
+                <input type="text" class="form-control" id="fort_district" name="fort_district" placeholder="Enter fort district name">
+            </div>
+            <div class="mb-5">
+                <label for="latitude" class="form-label"><strong>Fort latitude</strong></label>
+                <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Enter fort latitude ">
+            </div>
+            <div class="mb-5">
+                <label for="longitude" class="form-label"><strong>Fort Longitude</strong></label>
+                <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Enter fort longitude">
+            </div>
+
+            <div class="mb-5">
+                <label for="fort_details" class="form-label"><strong>Fort Details</strong></label>
+                <textarea class="form-control" id="fort_details" name="fort_details" rows="3"></textarea>
+            </div>
+            </form>
+        </div>
+
+        <div class="container py-5">
+            <div class="button-container">
+                <button class="btn btn-outline-primary ms-3" type="submit" onclick="return confirmAction('add')" form="info_form" formmethod="post" formaction="/fort_add">Add</button>
+                <button class="btn btn-outline-primary ms-3" type="submit" onclick="return confirmAction('update')" form="info_form" formmethod="post" formaction="/fort_update">Update</button>
+                <button class="btn btn-outline-primary ms-3" type="submit" onclick="return confirmAction('delete')" form="info_form" formmethod="post" formaction="/fort_delete">Delete</button>
+                <button class="btn btn-outline-primary ms-3" type="submit" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

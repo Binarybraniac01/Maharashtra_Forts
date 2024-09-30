@@ -1,0 +1,190 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+
+        <!-- Hero Section Start-->
+        <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+            <div class="container py-5">
+                <div class="row justify-content-center py-5">
+                    <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                        <h1 class="display-3 text-white mb-3 animated slideInDown">Explore the Majestic Forts of Maharashtra</h1>
+                        <p class="fs-4 text-white mb-4 animated slideInDown">Tour Maharashtra - Your Ultimate Guide to Maharashra's Rich Fort Heritage</p>
+                        <div class="position-relative w-75 mx-auto animated slideInDown">
+                            <form id="search-form" method="post">
+                                <input id="first-input" class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" name="user_district" type="text" placeholder="Enter the District you want to Visit">
+                            </form>
+                            <button onclick="show()" type="submit" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;" form="search-form" formaction="/">Search for Forts</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Section Start-->
+
+
+
+
+
+
+
+
+
+        <!-- Service Start-->
+    {% if found == "found" %}
+        <div class="container-fluid">
+            <h1>List of Forts you can visit in {{user_district}}...... </h1>
+            <div class="container-fluid py-5">
+                    <div id="output-area" style="display: {{display}}; background-color: #e0f2f1;">
+                        <div class="py-4">
+                            <form id="generate-tour" method="post">
+                                <div class="form-check-group d-flex flex-wrap py-3">
+                                    {% for fort in fortsname %}
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="{{fort.fort_name}}" value="{{fort.fort_id}}" name="selected_checkbox">
+                                            <label class="form-check-label" for="{{fort.fort_name}}">{{fort.fort_name}}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+
+                                <div class="col d-flex flex-wrap justify-content-center">
+                                        <div class="d-flex flex-wrap justify-content-between">
+                                            <div class="form-group mb-2 ms-2">
+                                                <label for="milage">Vehicle Milage: </label>
+                                                <input type="text" id="milage" name="milage" placeholder="20" style="width:60px;">
+                                            </div>
+                                            <div class="form-group mb-2 ms-2">
+                                                <label for="liter">Cost Per Liter: </label>
+                                                <input type="text" id="liter" name="p_liter" placeholder="104.89" style="width:60px;">
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class="position-relative w-50 mx-auto row">
+                                    <div class="col d-flex justify-content-center align-items-center mt-3">
+                                        <a id="get-user-location" class="icon-link icon-link-hover px-3" type="button" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                                        </svg>use current location</a>
+
+<!--                                        <a class="icon-link icon-link-hover" style="&#45;&#45;bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="#">-->
+<!--                                            <svg class="bi" aria-hidden="true"><use xlink:href="#clipboard"></use></svg>-->
+<!--                                            Icon link-->
+<!--                                        </a>-->
+                                        <span id="user-loc-animation" style="display: none;">
+                                        </span>
+                                    </div>
+
+
+                                    <div id="user-loc" class="col d-flex justify-content-center align-items-center mt-2">
+                                        <button onclick="showLoading()" type="submit" class="btn btn-primary rounded-pill py-2 px-4 top-0 end-0 me-2" style="margin-top: 7px;" form="generate-tour" formaction="/generateplan">Generate Plan</button>
+                                        <div id="loading-animation" style="display: none;">
+                                            <div class="ring">Generating Plan
+                                                <span class="sring"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+
+
+
+    <!-- Service End -->
+
+
+    <!--gives alert if user enters wrong district-->
+    {% elif found == "nodata" %}
+        <div class="alert alert-dark" role="alert">
+            No Data Found !!!  Please fill the correct district name......
+        </div>
+
+
+    {% elif ltlg == "nolocation" %}
+        <div class="alert alert-dark" role="alert">
+            No Location Found !!!  Please click on use current location next time and then generate plan......
+        </div>
+        {% if fort_sel == "none" %}
+        <div class="alert alert-dark" role="alert">
+            No Selected Fort Found !!! Please select forts you want to visit next time and then generate plan......
+        </div>
+        {% endif %}
+
+
+    {% elif fort_sel == "none" %}
+        <div class="alert alert-dark" role="alert">
+            No Selected Fort Found !!! Please select forts you want to visit next time and then generate plan......
+        </div>
+
+
+    <!-- tried inheritance but as the start it checks if it is found and does not execute the query, goes directly to else-->
+    <!--Shown when user submits fort and personal location-->
+    {% elif triggerplan == "trigger" %}
+        <div class="container-fluid">
+            <h1 class="text-center">This is generated plan...</h1>
+<!--            <form id="my-form">-->
+            {% for plan, item in info_box|zip(items) %}
+                    <div class="container py-3 px-3">
+                        <div class="cust-container {% if loop.index % 2 == 0 %}slide-in-left{% else %}slide-in-right{% endif %}">
+                            <span><h1>From {{plan[0]}} to {{plan[1]}}</h1></span>
+                            <span><h1>Distance : {{plan[2]}}</h1></span>
+                            <span><h1>Travel Time : {{plan[3]}}</h1></span>
+                            <span><h1>{{plan[4]}}</h1></span>
+                            <span><h1>{{plan[5]}}</h1></span>
+                            <span><button type="button" data-item="{{item}}" class="btn btn-primary" onclick="showDirections(this)">Go To Maps</button></span>
+                        </div>
+                    </div>
+            {% endfor %}
+<!--            </form>-->
+        </div>
+        <div id="direction-animation" style="display: none;">
+            <div class="direction"></div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="para-container">
+                <div class="animated-content py-3 px-3">
+                <h4 class="text-center">Total time on road trip will be {{total_travel_time}}. </h4>
+                {% if estimated_days == 1 %}
+                    <h4 class="text-center">Estimated days required to complete this trip are {{estimated_days}} day.</h4>
+                {% elif estimated_days > 1 %}
+                    <h4 class="text-center">Estimated days required to complete this trip are {{estimated_days}} days.</h4>
+                {% endif %}
+                    <h4 class="text-center">Estimated total fuel requirement for total planed trip is {{total_f_c[0]}} liters.</h4>
+                    <h4 class="text-center">Estimated minimum travel expense for total planed trip is ₹{{total_f_c[1]}}.</h4>
+                <h3 class="text-center">HAVE A NICE TRIP......</h3>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    <!--  Default rendered to show user what to do  at home page-->
+    {% else %}
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Enter district and see how many forts there are !!</h4>
+            <p>Get a planned trip with the guidence and information which will be crucial for your Trip.</p>
+            <hr>
+            <p class="mb-0">Enjoy the beauty of maharashtra with engaging road trips to your desired forts.</p>
+        </div>
+
+
+    {% endif %}
+
+
+
+
+{% endblock %}
+
+
+<!-- <form id="generate-tour" method="post">-->
+<!-- <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" id="place-search-input" placeholder="Enter your current location" name="usr_current_location">-->

@@ -1,0 +1,235 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+
+
+            <!-- Title Banner Start -->
+            <div class="container-fluid px-4 pt-4 mt-4">
+                <div class="row g-4 align-items-center justify-content-center bg-light rounded">
+                    <div class="col-lg-6 d-flex flex-wrap justify-content-center py-4">
+                        <div class="text-primary text-center mw-100">
+                            <h2 class="text-primary fw-bolder">Admin Panel</h2>
+                            <small class="fs-4 text-dark">
+                                <a class="text-dark" href="/dashboard">Dashboard</a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Title Banner End -->
+
+            <!-- Quick Count Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4 justify-content-evenly">
+                    <div class="col-sm-4">
+                        <div class="bg-light rounded d-flex flex-wrap justify-content-center p-4 mw-100">
+                            <div class="fs-3 fw-bold mx-2 py-2 d-flex flex-wrap justify-content-between w-100">
+
+                                <p class="text-primary">
+                                    <img src="{{url_for('static', filename='admin/img/soil_border.png') }}" style="width:50px; height:40px;">
+                                    Soil Types
+                                </p>
+                                <p class="text-dark">8</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="bg-light rounded d-flex flex-wrap justify-content-center p-4 mw-100">
+                            <div class="fs-3 fw-bold mx-2 py-2 d-flex flex-wrap justify-content-between w-100">
+                                <p class="text-primary">
+                                    <img src="{{url_for('static', filename='admin/img/india_border.png') }}" style="width:50px; height:40px;">
+                                    Districts
+                                </p>
+                                <p class="text-dark">9</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="bg-light rounded d-flex flex-wrap justify-content-center p-4 mw-100">
+                            <div class="fs-3 fw-bold mx-2 py-2 d-flex flex-wrap justify-content-between w-100">
+                                <p class="text-primary">
+                                    <img src="{{url_for('static', filename='admin/img/wheat.png') }}" style="width:50px; height:40px;">
+                                    Crops
+                                </p>
+                                <p class="text-dark">9</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Quick Count End -->
+
+
+            <!-- Table section start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="p-4 bg-light">
+                    <div class="row g-4 ">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <h6 class="mb-0">Soil Table</h6>
+                            <!--<a href="">Show All</a>-->
+                        </div>
+                        <div class="table-responsive d-flex justify-content-between">
+                            <table class="table text-start align-middle table-bordered table-hover w-25 mb-0">
+                                <thead>
+                                    <tr class="text-dark">
+                                        <th scope="col">Soil ID</th>
+                                        <th scope="col">Soil Name</th>
+                                        <!--<th scope="col">Customer</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Status</th>-->
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>01</td>
+                                        <td>Black Soil</td>
+                                        <!--<td>Jhon Doe</td>
+                                        <td>$123</td>
+                                        <td>Paid</td>-->
+                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>02</td>
+                                        <td>Clay Soil</td>
+                                        <!--<td>Jhon Doe</td>
+                                        <td>$123</td>
+                                        <td>Paid</td>-->
+                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>03</td>
+                                        <td>Loamy Soil</td>
+                                        <!--<td>Jhon Doe</td>
+                                        <td>$123</td>
+                                        <td>Paid</td>-->
+                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>04</td>
+                                        <td>Sandy Soil</td>
+                                        <!--<td>Jhon Doe</td>
+                                        <td>$123</td>
+                                        <td>Paid</td>-->
+                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>05</td>
+                                        <td>Red Soil</td>
+                                        <!--<td>Jhon Doe</td>
+                                        <td>$123</td>
+                                        <td>Paid</td>-->
+                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table section end -->
+
+
+            <!-- Recent Sales Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Soil Table</h6>
+                        <a href="">Show All</a>
+                    </div>
+                    <div class="table-responsive d-flex justify-content-between">
+                        <table class="table text-start align-middle table-bordered table-hover w-25 mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                                    <th scope="col">Soil ID</th>
+                                    <th scope="col">Soil Name</th>
+                                    <!--<th scope="col">Customer</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Status</th>-->
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>01</td>
+                                    <td>Black Soil</td>
+                                    <!--<td>Jhon Doe</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>-->
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>02</td>
+                                    <td>Clay Soil</td>
+                                    <!--<td>Jhon Doe</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>-->
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>03</td>
+                                    <td>Loamy Soil</td>
+                                    <!--<td>Jhon Doe</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>-->
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>04</td>
+                                    <td>Sandy Soil</td>
+                                    <!--<td>Jhon Doe</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>-->
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>05</td>
+                                    <td>Red Soil</td>
+                                    <!--<td>Jhon Doe</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>-->
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Todo: add form -->
+                        <div class="d-flex flex-wrap w-100 mh-100 bg-dark ps-4">
+                            <div class=" ">
+                                <table>
+                                    <form>
+                                        <thread>
+                                            <tr>
+                                                <td>
+                                                    <lable for="soil" class="text-primary">Soil id : </lable>
+                                                </td>
+                                                <td>
+                                                    <input id="soil" name="soil" placeholder="enter id">
+                                                </td>
+                                            </tr>
+                                        </thread>
+                                        <thread>
+                                            <tr>
+                                                <lable for="name" class="text-primary ">Soil name : </lable>
+                                            </tr>
+                                            <tr>
+                                                <input id="name" name="name" placeholder="enter name"/>
+                                            </tr>
+                                        </thread>
+                                    </form>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Recent Sales End -->
+
+
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+        <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+            <div class="container py-5">
+                <div class="row justify-content-center py-5">
+                    <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                        <h1 class="display-3 text-white animated slideInDown">Know About Forts</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+<!--                                <li class="breadcrumb-item"><a href="#">Pages</a></li>-->
+                                <li class="breadcrumb-item text-white active" aria-current="page">Know About Forts</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="container py-5">
+<!--                <a href="/knowaboutforts">get info</a>-->
+                <form class="d-flex justify-content-center">
+                    <input style="width: 300px; height: 40px; font-size: 16px;" id="fort_find" name="fort_name" type="text" placeholder="Enter the fort name eg: raigad fort">
+                    <button class="btn btn-primary ms-2" type="submit" formaction="/knowaboutforts" formmethod="post">get info</button>
+                </form>
+                {% if knowforts == "selected" %}
+                    <div class="py-5">
+                    {% if d_l %}
+                        {% for d in d_l %}
+                            <div class="container py-2">{{d}}</div>
+                        {% endfor %}
+
+                    {% elif d_info %}
+                        <div class="container py-2">{{d_info}}</div>
+
+                    {% endif %}
+                    </div>
+
+                {% elif f_data == "none" %}
+                    <div class="container py-5">
+                    <div class="alert alert-dark" role="alert">
+                        No Searched Fort Found !!! Please check again if you are filling appropriate fort name......
+                    </div>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+
+
+
+{% endblock %}
+
+

@@ -1,0 +1,212 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+
+
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+<!--                <div class="container px-5 py-2">-->
+                <div class="alert alert-warning alert-dismissible fade show m-2" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<!--                </div>-->
+            {% endfor %}
+
+        {% endif %}
+    {% endwith %}
+
+
+
+    <div class="container-fluid px-5 py-4">
+
+        <h5 class="text-center"> All Feedbacks </h5>
+        <div class="container py-2">
+        <div class="table-responsive sticky-header" style="height:300px">
+        <table class="table table-hover table-bordered caption-top" id="table4">
+            <thead>
+                <tr class="text-dark">
+                <th class="text-center" scope="col">Feedback ID</th>
+                <th class="text-center" scope="col">Name</th>
+                <th class="text-center" scope="col">Email</th>
+                <th class="text-center" scope="col">Subject</th>
+                <th class="text-center" scope="col">Message</th>
+<!--                <th class="text-center" scope="col">Status</th>-->
+                <th class="text-center" scope="col">Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% if all_feedbacks %}
+            {% for feedback in all_feedbacks %}
+                <tr>
+                    <td class="text-center" scope="row">{{feedback.feedback_id}}</td>
+                    <td class="text-center" scope="row">{{feedback.name}}</td>
+                    <td class="text-center" scope="row">{{feedback.email}}</td>
+                    <td class="text-center" scope="row">{{feedback.subject}}</td>
+                    <td class="text-center" scope="row">{{feedback.message}}</td>
+<!--                    <td class="text-center" scope="row">{{feedback.status}}</td>-->
+                    <td class="text-center" scope="row">{{feedback.date}}</td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        </div>
+        </div>
+    </div>
+
+
+
+
+
+
+        <div class="container-fluid p-5">
+            <div class="d-flex justify-content-center">
+                    <form id="info_form">
+                        <div class="row g-3">
+<!--                            <div class="col-md-6">-->
+<!--                                <div class="form-floating">-->
+                                    <input type="text" class="form-control visually-hidden" id="feedback_id" name="feedback_id" value="">
+<!--                                    <label for="feedback_id">Feedback Id</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
+                                    <label for="name">User Name</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Your Email">
+                                    <label for="email">User Email</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
+                                    <label for="subject">Subject</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a message here" id="message" name="message" style="height: 100px"></textarea>
+                                    <label for="message">Message</label>
+                                </div>
+                            </div>
+
+<!--                            <div class="col-md-6">-->
+<!--                                <div class="form-floating">-->
+<!--                                    <input type="text" readonly class="form-control" id="status" name="status" value="" style="width: 150px">-->
+<!--                                    <label for="status">Message Status</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+                    </form>
+            </div>
+
+
+            <div class="container py-3 d-flex justify-content-center">
+                <div class="button-container">
+                    <button class="btn btn-outline-primary ms-3" type="submit" onclick="return feedbackconfirmAction('delete')" form="info_form" formmethod="post" formaction="/feedbackdelete">Delete</button>
+                    <button class="btn btn-outline-primary ms-3" type="submit" onclick="clearForm()">Clear</button>
+                </div>
+            </div>
+    </div>
+
+
+
+
+
+
+
+
+<!--    <div class="container-fluid px-5">-->
+<!--        <div class="container p-2">-->
+<!--            <form id="info_form">-->
+<!--                -->
+<!--            <div class="mb-3 row">-->
+<!--                <label for="feedback_id" class="col-sm-2 col-form-label"><strong>Feedback ID </strong></label>-->
+<!--                <div class="col-sm-10">-->
+<!--                    <input type="text" readonly class="form-control-plaintext" id="feedback_id" name="feedback_id" value="">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="name" class="form-label"><strong>Name</strong></label>-->
+<!--                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="forts_visited" class="form-label"><strong>Fort Names</strong></label>-->
+<!--                <input type="text" class="form-control" id="forts_visited" name="forts_visited" placeholder="Enter fort names">-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="required_time" class="form-label"><strong>Required Time</strong></label>-->
+<!--                <input type="text" class="form-control" id="required_time" name="required_time" placeholder="Enter required time ">-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="minimum_cost" class="form-label"><strong>Minimum Cost</strong></label>-->
+<!--                <input type="text" class="form-control" id="minimum_cost" name="minimum_cost" placeholder="Enter minimum cost">-->
+<!--            </div>-->
+
+<!--            <div class="mb-3 ">-->
+<!--                <label for="upload_img" class="form-label"><strong>Upload Image</strong></label><br>-->
+<!--                <input type="file" name="pic" id="upload_img">-->
+<!--&lt;!&ndash;                <input type="text" class="form-control" id="upload_img" name="trip_title" placeholder="Enter trip title">&ndash;&gt;-->
+<!--            </div>-->
+
+<!--            <div class="mb-3">-->
+<!--                <label for="trip_title" class="form-label"><strong>Trip Title</strong></label>-->
+<!--                <input type="text" class="form-control" id="trip_title" name="trip_title" placeholder="Enter trip title">-->
+<!--            </div>-->
+
+<!--            <div class="mb-3">-->
+<!--                <label for="trip_details" class="form-label"><strong>Trip Details</strong></label>-->
+<!--                <textarea class="form-control" id="trip_details" name="trip_details" rows="3"></textarea>-->
+<!--            </div>-->
+<!--            </form>-->
+<!--        </div>-->
+
+
+
+<!--        <div class="container py-3">-->
+<!--            <div class="button-container">-->
+<!--                <button class="btn btn-outline-primary ms-3" type="submit" onclick="return recomconfirmAction('add')" form="info_form" formmethod="post" formaction="/addonly">Add</button>-->
+<!--                <button class="btn btn-outline-primary ms-3" type="submit" onclick="clearForm()">Clear</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--    </div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

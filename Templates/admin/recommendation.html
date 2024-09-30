@@ -1,0 +1,299 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+<!--                <div class="container px-5 py-2">-->
+                <div class="alert alert-warning alert-dismissible fade show m-2" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<!--                </div>-->
+            {% endfor %}
+
+        {% endif %}
+    {% endwith %}
+
+
+<!--    <div class="container-fluid px-5 py-2">-->
+<!--        <div class="container  py-2">-->
+<!--            <form id="search_form" class="d-flex justify-content-around">-->
+<!--                <div class="form-group mx-4">-->
+<!--                    <input type="search" name="query" placeholder="Search for forts" style="height:35px;">-->
+<!--                    <button class="btn btn-primary" type="submit" form="search_form" formmethod="post" formaction="/recommendationsearch">Search</button>-->
+<!--                </div>-->
+
+<!--                <div class="form-group mx-4 d-flex justify-content-around">-->
+<!--                <select  name="district" id="district" class="form-select" aria-label="Default select example" style="width:150px">-->
+<!--                    <option selected>Select District</option>-->
+<!--                    {% for district in districts %}-->
+<!--                        <option value="{{district}}">{{district}}</option>-->
+<!--                    {% endfor %}-->
+<!--                </select>-->
+<!--                <button class="btn btn-outline-primary mx-3" type="submit" form="search_form" formmethod="post" formaction="/recommendationsearch">Most Viewed</button>-->
+<!--                </div>-->
+
+<!--                <a class="btn btn-primary mx-3" href="/myrecommendation" role="button">Your Recommendations</a>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+
+
+    <div class="container-fluid px-5 py-5">
+        <form id="search_form" class="row g-4 justify-content-evenly">
+<!--        <div class="row g-4 justify-content-evenly">-->
+            <div class="col-sm-4">
+                <div class="form-group mx-4 d-flex flex-wrap justify-content-evenly">
+                    <input type="text" name="query" placeholder="Search for forts" style="height:35px;">
+                    <button class="btn btn-primary" type="submit" form="search_form" formmethod="post" formaction="/recommendationsearch">Search</button>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group mx-auto d-flex flex-wrap justify-content-center">
+                <select  name="district" id="district" class="form-select" aria-label="Default select example" style="width:150px; height:40px;">
+                    <option selected>Select District</option>
+                    {% for district in districts %}
+                        <option value="{{district}}">{{district}}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-outline-primary mx-3" type="submit" form="search_form" formmethod="post" formaction="/recommendationsearch">Most Viewed</button>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group mx-auto d-flex flex-wrap justify-content-center">
+                    <a class="btn btn-primary mx-auto" href="/myrecommendation" role="button">Your Recommendations</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+
+
+
+
+    <div class="container-fluid px-5 py-4">
+    {% if nodata %}
+        <h5 class="text-center text-dark py-5" style="height:450px"> No Data Found </h5>
+
+    {% elif my_recommendations %}
+        <!--  YOUR Recommendation starts here  -->
+        <h5 class="text-center"> Your Recommendations </h5>
+
+        <div class="table-responsive sticky-header" style="height:300px">
+        <table class="table table-hover table-bordered caption-top" id="table3">
+            <thead>
+                <tr class="text-dark">
+                <th class="text-center" scope="col">Recommendation ID</th>
+                <th class="text-center" scope="col">Trip ID</th>
+                <th class="text-center" scope="col">District</th>
+                <th class="text-center" scope="col">Fort Names</th>
+                <th class="text-center" scope="col">Required Time</th>
+                <th class="text-center" scope="col">Travel Cost</th>
+                <th class="text-center" scope="col">Trip Title</th>
+                <th class="text-center" scope="col">Trip Details</th>
+                <th class="text-center" scope="col">Image</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for trip in my_recommendations %}
+                <tr>
+                    <td class="text-center" scope="row">{{trip.recommendation_id}}</td>
+                    <td class="text-center" scope="row">{{trip.trip_id}}</td>
+                    <td class="text-center" scope="row">{{trip.trip_district}}</td>
+                    <td class="text-center" scope="row">{{trip.forts_visited}}</td>
+                    <td class="text-center" scope="row">{{trip.required_time}}</td>
+                    <td class="text-center" scope="row">{{trip.minimum_cost}}</td>
+                    <td class="text-center" scope="row">{{trip.trip_title}}</td>
+                    <td class="text-center" scope="row">{{trip.trip_details}}</td>
+                    <td class="text-center" scope="row">{{trip.image_name}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        {% if r_count %}
+            <p class="pt-5">Total result found : {{r_count}}</p>
+        {% endif %}
+
+
+
+    {% else %}
+        {% if most_v_recommendation %}
+            <h5 class="text-center">Trips Ranked According To There Frequency </h5>
+        {% elif planned_trips %}
+            <h5 class="text-center">All trips </h5>
+        {% elif r_s_forts %}
+            <h5 class="text-center">Search Result</h5>
+        {% endif %}
+    <div class="table-responsive sticky-header" style="height:400px">
+<!--    <h1>Search Results</h1>-->
+        <table class="table table-hover table-bordered caption-top" id="table2">
+            <thead>
+                <tr class="text-dark">
+                <th class="text-center" scope="col">Trip ID</th>
+                <th class="text-center" scope="col">District</th>
+                <th class="text-center" scope="col">Fort Names</th>
+                <th class="text-center" scope="col">Required Time</th>
+                <th class="text-center" scope="col">Travel Cost</th>
+                <th class="text-center" scope="col">Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+<!--            for searched fort in input for alltrips-->
+            {% if r_s_forts %}
+                {% for trip in r_s_forts %}
+                <tr>
+                    <td class="text-center" scope="row">{{trip.trip_id}}</td>
+                    <td class="text-center" scope="row">{{trip.trip_district}}</td>
+                    <td class="text-center" scope="row">{{trip.forts_visited}}</td>
+                    <td class="text-center" scope="row">{{trip.required_time}}</td>
+                    <td class="text-center" scope="row">{{trip.minimum_cost}}</td>
+                    <td class="text-center" scope="row">{{trip.date}}</td>
+                </tr>
+                {% endfor %}
+
+            {% elif most_v_recommendation %}
+                {% for trip in most_v_recommendation %}
+                <tr>
+                    <td class="text-center" scope="row">{{trip.trip_id}}</td>
+                    <td class="text-center" scope="row">{{trip.trip_district}}</td>
+                    <td class="text-center" scope="row">{{trip.forts_visited}}</td>
+                    <td class="text-center" scope="row">{{trip.required_time}}</td>
+                    <td class="text-center" scope="row">{{trip.minimum_cost}}</td>
+                    <td class="text-center" scope="row">{{trip.date}}</td>
+                </tr>
+                {% endfor %}
+
+            {% elif planned_trips %}
+                <!--Default list of all trips-->
+                {% for trip in planned_trips %}
+                <tr>
+                    <td class="text-center" scope="row">{{trip.trip_id}}</td>
+                    <td class="text-center" scope="row">{{trip.trip_district}}</td>
+                    <td class="text-center" scope="row">{{trip.forts_visited}}</td>
+                    <td class="text-center" scope="row">{{trip.required_time}}</td>
+                    <td class="text-center" scope="row">{{trip.minimum_cost}}</td>
+                    <td class="text-center" scope="row">{{trip.date}}</td>
+                </tr>
+                {% endfor %}
+
+            {% endif %}
+            </tbody>
+
+        </table>
+    </div>
+        {% if r_count %}
+            <p class="pt-5">Total result found : {{r_count}}</p>
+        {% endif %}
+    {% endif %}
+    </div>
+
+
+
+
+
+    <div class="container-fluid px-5">
+        <div class="container p-2">
+            <form id="info_form" enctype="multipart/form-data">
+
+            {% if my_recommendations %}
+                <div class="mb-3 row">
+                    <label for="recommendation_id" class="text-dark col-sm-2 col-form-label"><strong>Recommendation ID </strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="recommendation_id" name="recommendation_id" value="">
+                    </div>
+                </div>
+            {% endif %}
+            <div class="mb-3 row">
+                <label for="trip_id" class="col-sm-2 col-form-label"><strong>Trip ID </strong></label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="trip_id" name="trip_id" value="">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="trip_district" class="form-label"><strong>District Name</strong></label>
+                <input type="text" class="form-control" id="trip_district" name="trip_district" placeholder="Enter district name">
+            </div>
+            <div class="mb-3">
+                <label for="forts_visited" class="form-label"><strong>Fort Names</strong></label>
+                <input type="text" class="form-control" id="forts_visited" name="forts_visited" placeholder="Enter fort names">
+            </div>
+            <div class="mb-3">
+                <label for="required_time" class="form-label"><strong>Required Time</strong></label>
+                <input type="text" class="form-control" id="required_time" name="required_time" placeholder="Enter required time ">
+            </div>
+            <div class="mb-3">
+                <label for="minimum_cost" class="form-label"><strong>Minimum Cost</strong></label>
+                <input type="text" class="form-control" id="minimum_cost" name="minimum_cost" placeholder="Enter minimum cost">
+            </div>
+
+            <div class="mb-3 ">
+                <label for="upload_img" class="form-label"><strong>Upload Image</strong></label><br>
+                <input type="file" name="pic" id="upload_img">
+<!--                <input type="text" class="form-control" id="upload_img" name="trip_title" placeholder="Enter trip title">-->
+            </div>
+
+            <div class="mb-3">
+                <label for="trip_title" class="form-label"><strong>Trip Title</strong></label>
+                <input type="text" class="form-control" id="trip_title" name="trip_title" placeholder="Enter trip title">
+            </div>
+
+            <div class="mb-3">
+                <label for="trip_details" class="form-label"><strong>Trip Details</strong></label>
+                <textarea class="form-control" id="trip_details" name="trip_details" rows="3"></textarea>
+            </div>
+            </form>
+        </div>
+
+
+        {% if my_recommendations %}
+            <div class="container py-3">
+                <div class="button-container">
+                    <button class="btn btn-outline-primary ms-3" type="submit" onclick="return recomconfirmAction('add')" form="info_form" formmethod="post" formaction="/recommadd">Add</button>
+                    <button class="btn btn-outline-primary ms-3" type="submit" onclick="return recomconfirmAction('update')" form="info_form" formmethod="post" formaction="/recommupdate">Update</button>
+                    <button class="btn btn-outline-primary ms-3" type="submit" onclick="return recomconfirmAction('delete')" form="info_form" formmethod="post" formaction="/recommdelete">Delete</button>
+                    <button class="btn btn-outline-primary ms-3" type="submit" onclick="clearForm()">Clear</button>
+                </div>
+            </div>
+
+        {% else %}
+            <div class="container py-3">
+                <div class="button-container">
+                    <button class="btn btn-outline-primary ms-3" type="submit" onclick="return recomconfirmAction('add')" form="info_form" formmethod="post" formaction="/addonly">Add</button>
+                    <button class="btn btn-outline-primary ms-3" type="submit" onclick="clearForm()">Clear</button>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
